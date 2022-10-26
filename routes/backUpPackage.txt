@@ -1,0 +1,198 @@
+const mongoose = require('mongoose');
+const express = require('express');
+const argon2 = require('argon2');
+const _ = require('lodash');
+const jwt = require('jsonwebtoken');
+const router = express.Router();
+const verifyToken = require('../middleware/auth');
+var ObjectId = require('mongodb').ObjectId;
+
+const PackageData = require('../models/PackageData');
+const CatData = require('../models/CategoryData');
+
+//@router POST api/auth/dataPackage
+//@access Private
+
+router.post('/', verifyToken, async (req, res) => {
+  const {
+    packageName,
+    price,
+    goodwill,
+    employeePhone,
+    switchboardPhone,
+    cancelRenewal,
+    cancelPackage,
+    img,
+    cat,
+  } = req.body;
+  if (!packageName) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Missing name package' });
+  }
+  try {
+    const package = await PackageData.findOne({ packageName });
+    if (package)
+      return res
+        .status(400)
+        .json({ success: false, message: 'Tên gói cước đã được sử dụng' });
+
+    const _id = new mongoose.Types.ObjectId();
+
+    const newPackageData = {
+      packageName,
+      price,
+      goodwill,
+      employeePhone,
+      switchboardPhone,
+      cancelRenewal,
+      cancelPackage,
+      img,
+      cat,
+    },;
+
+
+    await newPackageData.save();
+
+    res.json({
+      success: true,
+      message: 'directory created successfully',
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: 'Internal Server error ...' });
+  }
+});
+
+router.put('/', verifyToken, async (req, res) => {
+  const {
+    idPackage,
+    packageName,
+    price,
+    goodwill,
+    employeePhone,
+    switchboardPhone,
+    cancelRenewal,
+    cancelPackage,
+    img,
+    cat,
+  } = req.body;
+
+  try {
+    const dataPackage = await PackageData.findOne({ _id: idPackage });
+    if (!dataPackage) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'data package notfound' });
+    }
+    let newUpdate = {
+      packageName: packageName || dataPackage.packageName,
+      price: price || dataPackage.price,
+      goodwill: goodwill || dataPackage.goodwill,
+      employeePhone: employeePhone || dataPackage.employeePhone,
+      switchboardPhone: switchboardPhone || dataPackage.switchboardPhone,
+      cancelRenewal: cancelRenewal || dataPackage.cancelRenewal,
+      cancelPackage: cancelPackage || dataPackage.cancelPackage,
+      img: img || dataPackage.img,
+      cat: cat || dataPackage.cat,
+    };
+    const updatePackage = await PackageData.findOneAndUpdate(
+      { _id: idPackage },
+      newUpdate
+    );
+    if (!updatePackage)
+      return res.status(401).json({
+        success: false,
+        message: 'Cat not found or user not authorised',
+      });
+    res.json({ success: true, message: 'Update successfulsss' });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//@router GEt api/auth/dataPackage
+//@access Public
+
+router.get('/', async (req, res) => {
+  var myregexp = /^[0-9a-fA-F]{24}$/;
+  const params = req.query;
+  const { limit = 10, categoryId, page = 1, packageId } = params;
+  try {
+    let listPackage = await PackageData.find().populate({
+      path: 'cat',
+      slect: 'nameCatPackge',
+    });
+
+    // console.log({ categoryId });
+    if (categoryId) {
+      if (!myregexp.test(categoryId)) {
+        return res.status(404).json({ success: false, message: 'nodfound...' });
+      }
+      listPackage = _.filter(listPackage, {
+        cat: [{ _id: new ObjectId(categoryId) }],
+      });
+
+      if (!listPackage) {
+        return res.status(404).json({
+          success: false,
+          message:
+            'The page you are looking for has been changed or is not available...',
+        });
+      }
+    }
+    if (packageId) {
+      console.log(myregexp.test(packageId));
+      if (!myregexp.test(packageId)) {
+        return res.status(404).json({ success: false, message: 'nodfound...' });
+      }
+
+      listPackage = await PackageData.find({
+        _id: packageId,
+      });
+    }
+
+    const totalRows = listPackage.length;
+
+    const start = (page - 1) * limit;
+
+    const end = page * limit;
+
+    const newPackages = listPackage.slice(start, end);
+
+    res.json({
+      success: true,
+      packageData: newPackages,
+      pagination: {
+        total: totalRows,
+        page,
+        limit,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// @router DETELE api/packageData
+// @desc detele packageData
+// @access Private
+router.delete('/:id', verifyToken, async (req, res) => {
+  try {
+    const deteleBill = await PackageData.findOneAndDelete({
+      _id: req.params.id,
+    });
+    if (!deteleBill)
+      return res.status(401).json({
+        success: false,
+        message: 'Package not found or user not authorised',
+      });
+    res.json({ success: true, packageData: deteleBill });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: 'internal server error' });
+  }
+});
+
+module.exports = router;

@@ -1,0 +1,187 @@
+POST http://localhost:5000/api/register
+Content-Type: application/json
+
+{
+    "username": "Trần Thị Nguyệt",
+    "password": "123123",
+    "address": "Phù hưng 2, Yên Thái, Yên Định, Thanh Hóa",
+    "phone": "0985111118",
+    "position": "admin",
+    "email": "nguyet@gmail.com"
+}
+
+###
+
+POST http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+    "email": "nguyet@gmail.com",
+    "password":"123123"
+}
+
+###
+
+GET  http://localhost:5000/api/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+###
+
+POST http://localhost:5000/api/catPackage
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+{
+    "nameCatPackge": "Gói Cước giá rẻ mạt"
+}
+
+
+###
+
+PUT  http://localhost:5000/api/catPackage
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+{
+    "nameCatPackge": "Gói Cước giá rẻ mạt",
+    "catPackageId": "634ee8eefb21727115c73618"
+}
+
+###
+
+DELETE http://localhost:5000/api/catPackage/634eebe334039addf37a519d
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+###
+//get category package data
+GET http://localhost:5000/api/catPackage
+Content-Type: application/json
+
+###
+//get category package data
+GET http://localhost:5000/api/catPackage/allCat
+Content-Type: application/json
+
+###
+//get category package data
+GET http://localhost:5000/api/catPackage/634eec5234039addf37a51a4
+Content-Type: application/json
+
+
+###
+POST   http://localhost:5000/api/packageData
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+{
+    "packageName": "1Y",
+    "price": "100.000đ/ 90 ngày",
+    "periodTime": "90 ngay",
+    "goodwill":"lorem",
+    "employeePhone": "098511118",
+    "switchboardPhone": "9123",
+    "cancelRenewal":"Soạn HUY 1N gửi 191",
+    "cancelPackage":"HUYDATA 1N gửi 191",
+    "cat": "634eec5234039addf37a51a4"
+}
+
+
+###
+
+PUT    http://localhost:5000/api/packageData
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+{
+    "idPackage": "6353a77f9c115993d057c0f4",
+    "packageName": "1Y",
+    "price": "100.000đ/ 901 ngày",
+    "goodwill":"lorem",
+    "employeePhone": "098511118",
+    "switchboardPhone": "9123",
+    "cancelRenewal":"Soạn HUY 1N gửi 191",
+    "cancelPackage":"HUYDATA 1N gửi 191",
+    "img": "https://i.ibb.co/Lk48M66/1n.png",
+    "cat": "634ef5107c3da3b025f38e2b"
+}
+
+
+###
+// delete packagedata
+DELETE     http://localhost:5000/api/packageData/634ef5357c3da3b025f38e31
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+
+
+
+###
+
+GET     http://localhost:5000/api/packageData
+###
+
+GET     http://localhost:5000/api/packageData?packageId=634c842615ddcadf1f153392
+
+
+###
+
+GET     http://localhost:5000/api/packageData?categoryId=634eec5234039addf37a51a4
+
+
+###
+
+GET     http://localhost:5000/api/fullBoard
+
+
+###
+
+PUT  http://localhost:5000/api/fullBoard/sort-cat
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+
+{
+    "indexA":0,
+    "indexB":1
+}
+
+
+
+###
+
+PUT  http://localhost:5000/api/sort/swap-data-package
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+{
+   "idColumnCat" : "634eec5234039addf37a51a4",
+   "idPackageDAta" :"6350000eada4eb0267806476",
+   "removedIndex": null,
+   "addedIndex": 0
+}
+###
+
+PUT  http://localhost:5000/api/sort/swap-data-package
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+{
+   "idColumnCat" : "634ef5107c3da3b025f38e2b",
+   "idPackageDAta" :"6350000eada4eb0267806476",
+   "removedIndex": 0,
+   "addedIndex": null
+}
+
+
+###
+
+PUT  http://localhost:5000/api/sort/swap-column-cat
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzNkYmFlYTIyZTE4NDE3OTM4MDAyMmYiLCJpYXQiOjE2NjUxMjk1MjN9.UaQsyqoB1WUOneGAmGw8g7nM6sd1VxiWmO5cx7DecC8
+
+{
+   "idColumnCat" : "6351b48ccab44cdeefdc2847",
+   "removedIndex": 3,
+   "addedIndex": 0
+}
