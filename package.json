@@ -4,7 +4,7 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "start": "nodemon index"
+        "start": "node index"
     },
     "dependencies": {
         "argon2": "^0.29.1",
