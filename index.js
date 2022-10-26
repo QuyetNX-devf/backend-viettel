@@ -14,6 +14,9 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
+app.get('/', (req, res) => {
+    res.send('Backend Viettel');
+});
 app.use('/api/', authRouter);
 app.use('/api/catPackage', catPackage);
 app.use('/api/profile', profileRouter);
